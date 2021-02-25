@@ -8,7 +8,41 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ExpenseItHome">
 
-    <Grid>
-        
+    <Grid Margin="10,0,10,10">
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\d.saraev\OneDrive\Изображения\NewPicture.png"  />
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- People list -->
+
+        <Label Grid.Column="1" Style="{StaticResource headerTextStyle}" >
+            View Expense Report
+        </Label>
+
+        <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource listHeaderStyle}">
+            <Label Style="{StaticResource listHeaderTextStyle}">Names</Label>
+        </Border>
+        <ListBox Name="peopleListBox" Grid.Column="1" Grid.Row="2">
+            <ListBoxItem>Mike</ListBoxItem>
+            <ListBoxItem>Lisa</ListBoxItem>
+            <ListBoxItem>John</ListBoxItem>
+            <ListBoxItem>Mary</ListBoxItem>
+        </ListBox>
+
+        <!-- View report button -->
+        <Button Grid.Column="1" Grid.Row="3" Click="Button_Click" Style="{StaticResource buttonStyle}">View</Button>
     </Grid>
+
 </Page>
