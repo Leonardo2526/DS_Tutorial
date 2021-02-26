@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace UserApp
 {
@@ -23,6 +24,11 @@ namespace UserApp
         public MainWindow()
         {
             InitializeComponent();
+            DoubleAnimation doubleAnimation = new DoubleAnimation();
+            doubleAnimation.From = 0;
+            doubleAnimation.To = 450;
+            doubleAnimation.Duration = TimeSpan.FromSeconds(3);
+            regButton.BeginAnimation(Button.WidthProperty, doubleAnimation);
         }
 
         private void Button_Reg_Click(object sender, RoutedEventArgs e)
