@@ -20,7 +20,7 @@
                 </BeginStoryboard>
             </EventTrigger.Actions>
         </EventTrigger>
-    </Window.Triggers>
+    </Window.Triggers> 
     <Grid Background="AliceBlue">
         <Border MinWidth="400" Margin="15" Background="White" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="20">
             <Border.Effect>
