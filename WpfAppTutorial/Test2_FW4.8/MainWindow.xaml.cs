@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +24,8 @@ namespace Test2_FW4._8
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<string> FileList = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +39,8 @@ namespace Test2_FW4._8
             string ext = "rvt";
             docs.GetFiles(DialogForms.SourcePath, ext);
             docs.DirIterate(DialogForms.SourcePath, ext);
-            List<string>  FileList = docs.FileFullNames_Filtered;
+            FileList.AddRange(docs.FileFullNames_Filtered);
+
 
             MessageBox.Show(FileList.Count.ToString());
         }
@@ -45,6 +50,41 @@ namespace Test2_FW4._8
             DialogForms dialogForms = new DialogForms();
             dialogForms.AssignSourcePath();
         }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void Start_progress_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            PB.Maximum = FileList.Count;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+
+            worker.RunWorkerAsync();
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            int i = 0;
+            foreach (string file in FileList)
+            {
+                i++;
+                (sender as BackgroundWorker).ReportProgress(i);
+                Thread.Sleep(100);
+            }
+
+        }
+
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            PB.Value = e.ProgressPercentage;
+        }
+
     }
 
 }

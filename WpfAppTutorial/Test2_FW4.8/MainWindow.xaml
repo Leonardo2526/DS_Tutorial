@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Set" Content=" Set" Height="40" Width="100" Click="Set_Click" Margin="120,147,573.333,233.667"/>
-        <Button x:Name="Start" Content=" Start" Height="40" Width="100" Margin="120,263,573.333,117.667" Click="Start_Click"/> 
+        <StackPanel>
+            <Button HorizontalAlignment="Left" x:Name="Set" Content=" Set" Height="40" Width="100" Padding="10" Margin="10,10,0,10" Click="Set_Click"/>
+            <Button HorizontalAlignment="Left" x:Name="Start" Content=" Start" Height="40" Width="100" Padding="10" Margin="10,10,0,10" Click="Start_Click"/>
+            <Button HorizontalAlignment="Left" x:Name="Start_progress" Content=" Start progress" Height="40" Width="100" Padding="10" Margin="10,10,0,10" Click="Start_progress_Click"/>
+            <ProgressBar x:Name="PB" Minimum="0" Height="25" ValueChanged="ProgressBar_ValueChanged"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
