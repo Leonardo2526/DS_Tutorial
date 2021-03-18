@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using DS_Forms;
 
 namespace Test2_FW4._8
@@ -31,7 +32,46 @@ namespace Test2_FW4._8
             InitializeComponent();
         }
 
+
+        private void Set_Click(object sender, RoutedEventArgs e)
+        {
+            DialogForms dialogForms = new DialogForms();
+            dialogForms.AssignSourcePath();
+        }
+
         private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            busyIndicator.IsBusy = true;
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += worker_DoMyWork;
+            worker.RunWorkerCompleted += (s, ev) => busyIndicator.IsBusy = false;
+            worker.RunWorkerAsync();
+            worker.RunWorkerCompleted += (s, ev) => MessageBox.Show(FileList.Count.ToString());
+        }
+
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void Start_progress_Click(object sender, RoutedEventArgs e)
+        {
+            busyIndicator.IsBusy = true;
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            PB.Maximum = FileList.Count;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+
+            worker.RunWorkerCompleted += (s, ev) => busyIndicator.IsBusy = false;
+            worker.RunWorkerAsync();
+        }
+
+
+        void worker_DoMyWork(object sender, DoWorkEventArgs e)
         {
 
             Docs docs = new Docs();
@@ -41,31 +81,8 @@ namespace Test2_FW4._8
             docs.DirIterate(DialogForms.SourcePath, ext);
             FileList.AddRange(docs.FileFullNames_Filtered);
 
-
-            MessageBox.Show(FileList.Count.ToString());
         }
 
-        private void Set_Click(object sender, RoutedEventArgs e)
-        {
-            DialogForms dialogForms = new DialogForms();
-            dialogForms.AssignSourcePath();
-        }
-
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
-
-        private void Start_progress_Click(object sender, RoutedEventArgs e)
-        {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            PB.Maximum = FileList.Count;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-
-            worker.RunWorkerAsync();
-        }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -85,6 +102,19 @@ namespace Test2_FW4._8
             PB.Value = e.ProgressPercentage;
         }
 
+
+        public static void ForceUIToUpdate()
+        {
+            DispatcherFrame frame = new DispatcherFrame();
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(delegate (object parameter)
+            {
+                frame.Continue = false;
+                return null;
+            }), null);
+
+            Dispatcher.PushFrame(frame);
+        }
     }
 
 }
