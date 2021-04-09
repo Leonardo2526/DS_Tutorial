@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BFDAD8FE-4130-4D5D-82AC-AAAC0D497D69}</ProjectGuid>
+    <ProjectGuid>{7D0F362F-97ED-4C07-A4EC-6AF6481BEFCE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Async</RootNamespace>
-    <AssemblyName>Async</AssemblyName>
+    <RootNamespace>Thread</RootNamespace>
+    <AssemblyName>Thread</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,9 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FactorialAsync.cs" />
-    <Compile Include="FactorialAsync_Tasks.cs" />
-    <Compile Include="GetHtmlAsync.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

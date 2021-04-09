@@ -5,11 +5,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Async
+namespace GetHtmlAsync
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
             string url = "https://www.dotnetfoundation.org";
             int count = 500;
@@ -51,3 +51,4 @@ namespace Async
         }
     }
 }
+
